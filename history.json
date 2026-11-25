@@ -1,0 +1,220 @@
+[
+  {
+    "crop": "Rice",
+    "score": 80,
+    "fertilizer": "Urea",
+    "summary": "ML fertilizer prediction completed",
+    "date": "25 Nov 2026, 10:57 AM"
+  },
+  {
+    "crop": "Rice",
+    "score": 80,
+    "fertilizer": "Urea",
+    "summary": "ML fertilizer prediction completed",
+    "date": "25 Nov 2026, 12:09 AM"
+  },
+  {
+    "crop": "Rice",
+    "score": 80,
+    "summary": "ML fertilizer prediction completed",
+    "created": "24 Nov 2026, 11:58 PM"
+  },
+  {
+    "crop": "Rice",
+    "score": 80,
+    "summary": "ML fertilizer prediction completed",
+    "created": "24 Nov 2026, 11:58 PM"
+  },
+  {
+    "crop": "Rice",
+    "score": 80,
+    "summary": "ML fertilizer prediction completed",
+    "created": "24 Nov 2026, 11:52 PM"
+  },
+  {
+    "crop": "Rice",
+    "score": 80,
+    "summary": "ML fertilizer prediction completed",
+    "created": "20 Nov 2026, 12:32 PM"
+  },
+  {
+    "crop": "Rice",
+    "score": 80,
+    "summary": "ML fertilizer prediction completed",
+    "created": "20 Nov 2026, 12:31 PM"
+  },
+  {
+    "crop": "Rice",
+    "score": 80,
+    "summary": "ML fertilizer prediction completed",
+    "created": "20 Nov 2026, 12:31 PM"
+  },
+  {
+    "crop": "Rice",
+    "score": 80,
+    "summary": "ML fertilizer prediction completed",
+    "created": "20 Nov 2026, 12:31 PM"
+  },
+  {
+    "crop": "Rice",
+    "score": 80,
+    "summary": "ML fertilizer prediction completed",
+    "created": "20 Nov 2026, 12:30 PM"
+  },
+  {
+    "crop": "Groundnut",
+    "score": 80,
+    "summary": "ML fertilizer prediction completed",
+    "created": "20 Nov 2026, 12:28 PM"
+  },
+  {
+    "crop": "Maize",
+    "score": 68,
+    "summary": "ML fertilizer prediction completed",
+    "created": "20 Nov 2026, 12:27 PM"
+  },
+  {
+    "crop": "Maize",
+    "score": 68,
+    "summary": "ML fertilizer prediction completed",
+    "created": "20 Nov 2026, 12:26 PM"
+  },
+  {
+    "crop": "Maize",
+    "score": 68,
+    "summary": "ML fertilizer prediction completed",
+    "created": "20 Nov 2026, 12:23 PM"
+  },
+  {
+    "crop": "Rice",
+    "score": 80,
+    "summary": "ML fertilizer prediction completed",
+    "created": "20 Nov 2026, 12:22 PM"
+  },
+  {
+    "crop": "Rice",
+    "score": 80,
+    "summary": "ML fertilizer prediction completed",
+    "created": "20 Nov 2026, 12:22 PM"
+  },
+  {
+    "crop": "Rice",
+    "score": 80,
+    "summary": "ML fertilizer prediction completed",
+    "created": "20 Nov 2026, 12:18 PM"
+  },
+  {
+    "crop": "Rice",
+    "score": 80,
+    "summary": "ML fertilizer prediction completed",
+    "created": "20 Nov 2026, 11:41 AM"
+  },
+  {
+    "crop": "Rice",
+    "score": 80,
+    "summary": "ML fertilizer prediction completed",
+    "created": "20 Nov 2026, 11:41 AM"
+  },
+  {
+    "crop": "Rice",
+    "score": 80,
+    "summary": "ML fertilizer prediction completed",
+    "created": "20 Nov 2026, 11:37 AM"
+  },
+  {
+    "crop": "Maize",
+    "score": 68,
+    "summary": "ML fertilizer prediction completed",
+    "created": "20 Nov 2026, 11:31 AM"
+  },
+  {
+    "crop": "Groundnut",
+    "score": 80,
+    "summary": "ML fertilizer prediction completed",
+    "created": "20 Nov 2026, 11:31 AM"
+  },
+  {
+    "crop": "Wheat",
+    "score": 68,
+    "summary": "ML fertilizer prediction completed",
+    "created": "20 Nov 2026, 11:30 AM"
+  },
+  {
+    "crop": "Sugarcane",
+    "score": 56,
+    "summary": "ML fertilizer prediction completed",
+    "created": "20 Nov 2026, 11:27 AM"
+  },
+  {
+    "crop": "Cotton",
+    "score": 68,
+    "summary": "ML fertilizer prediction completed",
+    "created": "20 Nov 2026, 11:26 AM"
+  },
+  {
+    "crop": "Rice",
+    "score": 80,
+    "summary": "ML fertilizer prediction completed",
+    "created": "20 Nov 2026, 11:26 AM"
+  },
+  {
+    "crop": "Rice",
+    "score": 80,
+    "summary": "ML fertilizer prediction completed",
+    "created": "20 Nov 2026, 11:26 AM"
+  },
+  {
+    "crop": "Rice",
+    "score": 80,
+    "summary": "ML fertilizer prediction completed",
+    "created": "20 Nov 2026, 11:26 AM"
+  },
+  {
+    "crop": "Rice",
+    "score": 80,
+    "summary": "ML fertilizer prediction completed",
+    "created": "20 Nov 2026, 11:02 AM"
+  },
+  {
+    "crop": "Rice",
+    "score": 80,
+    "summary": "ML fertilizer prediction completed",
+    "created": "20 Nov 2026, 10:58 AM"
+  },
+  {
+    "crop": "Rice",
+    "score": 80,
+    "summary": "Nutrient gaps need review",
+    "created": "20 Nov 2026, 09:39 AM"
+  },
+  {
+    "crop": "Rice",
+    "score": 80,
+    "summary": "Nutrient gaps need review",
+    "created": "20 Nov 2026, 09:39 AM"
+  },
+  {
+    "crop": "Rice",
+    "score": 80,
+    "summary": "Nutrient gaps need review",
+    "created": "20 Nov 2026, 09:39 AM"
+  },
+  {
+    "crop": "Rice",
+    "score": 80,
+    "summary": "Nutrient gaps need review",
+    "created": "20 Nov 2026, 09:39 AM"
+  },
+  {
+    "crop": "Rice",
+    "score": 80,
+    "summary": "Nutrient gaps need review",
+    "created": "20 Nov 2026, 09:34 AM"
+  },
+  {
+    "crop": "Rice",
+    "score": 80,
+    "summary": "Nutrient gaps need review",
+    "created": "20 Nov 2026, 09:34 AM"
+  }
+]

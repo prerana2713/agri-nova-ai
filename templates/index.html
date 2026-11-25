@@ -1,0 +1,1817 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Agri Nova AI | Precision Agriculture Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js" defer></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin="" defer></script>
+  <script src="/static/app.js" defer></script>
+</head>
+<body>
+  <div id="mobile-backdrop" class="mobile-backdrop" hidden></div>
+
+  <div class="app-shell">
+    <!-- SIDEBAR -->
+    <aside id="sidebar" class="sidebar" aria-label="Primary navigation">
+      <div class="sidebar-top">
+        <a class="brand" href="#overview" data-nav="overview">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/>
+              <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
+            </svg>
+          </span>
+          <span class="brand-text">
+            <strong>Agri Nova <span class="brand-ai">AI</span></strong>
+            <small>PRECISION AGRICULTURE</small>
+          </span>
+        </a>
+        <button id="sidebar-collapse-btn" class="icon-btn collapse-btn" type="button" aria-label="Toggle sidebar" title="Collapse sidebar">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+      </div>
+
+      <nav class="nav-list" aria-label="Workspace modules">
+        <span class="nav-section-label">WORKSPACE</span>
+
+        <button class="nav-item active" type="button" data-nav="overview">
+          <span class="nav-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
+          </span>
+          <span class="nav-label" data-i18n="nav_overview">Overview</span>
+        </button>
+
+        <button class="nav-item" type="button" data-nav="soil-analysis">
+          <span class="nav-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 2v7.31"/><path d="M14 9.3V1.99"/><path d="M8.5 2h7"/><path d="M14 9.3a6.5 6.5 0 1 1-4 0"/><path d="M5.52 16h12.96"/></svg>
+          </span>
+          <span class="nav-label" data-i18n="nav_soil">Soil Analysis</span>
+        </button>
+
+        <button class="nav-item" type="button" data-nav="crop-recommendation">
+          <span class="nav-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/></svg>
+          </span>
+          <span class="nav-label" data-i18n="nav_crop">Crop Recommendation</span>
+        </button>
+
+        <button class="nav-item" type="button" data-nav="pest-camera">
+          <span class="nav-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>
+          </span>
+          <span class="nav-label" data-i18n="nav_pest">Pest &amp; Camera AI</span>
+        </button>
+
+        <button class="nav-item" type="button" data-nav="farm-planner">
+          <span class="nav-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" y1="3" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="21"/></svg>
+          </span>
+          <span class="nav-label" data-i18n="nav_planner">Farm Planner &amp; Map</span>
+        </button>
+
+        <button class="nav-item" type="button" data-nav="fertilizer-guide">
+          <span class="nav-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>
+          </span>
+          <span class="nav-label" data-i18n="nav_guide">Fertilizer Guide</span>
+        </button>
+
+        <button class="nav-item" type="button" data-nav="weather">
+          <span class="nav-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
+          </span>
+          <span class="nav-label" data-i18n="nav_weather">Weather</span>
+        </button>
+
+        <button class="nav-item" type="button" data-nav="ai-assistant">
+          <span class="nav-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </span>
+          <span class="nav-label" data-i18n="nav_assistant">AI Assistant</span>
+        </button>
+
+        <button class="nav-item" type="button" data-nav="reports-history">
+          <span class="nav-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </span>
+          <span class="nav-label" data-i18n="nav_history">Reports History</span>
+        </button>
+
+        <button class="nav-item" type="button" data-nav="settings">
+          <span class="nav-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          </span>
+          <span class="nav-label" data-i18n="nav_settings">Settings</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="sidebar-note">
+          <span class="badge-pill">PROTOTYPE</span>
+          <p>Validate predictions with certified soil testing and local agronomists.</p>
+        </div>
+        <div class="account-box">
+          <div class="account-avatar" id="sidebar-avatar">GN</div>
+          <div class="account-meta">
+            <strong id="sidebar-user-name">Guest Workspace</strong>
+            <small id="sidebar-user-sub">Academic Demo Mode</small>
+          </div>
+          <button id="sidebar-auth-btn" class="btn-ghost btn-xs" type="button">Sign In</button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-wrap">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button id="mobile-menu-btn" class="icon-btn mobile-only" type="button" aria-label="Open menu">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <div>
+            <span class="topbar-crumb" id="topbar-crumb">WORKSPACE / OVERVIEW</span>
+            <h1 class="topbar-title" id="topbar-title">Overview</h1>
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <select id="lang-select" class="lang-select" aria-label="Select display language" title="Language">
+            <option value="en">EN</option>
+            <option value="hi">हिन्दी (HI)</option>
+            <option value="kn">ಕನ್ನಡ (KN)</option>
+          </select>
+          <span class="date-chip" id="current-date-chip">Today</span>
+          <span class="status-chip"><span class="dot-live"></span> ML Engine Ready</span>
+          <button id="topbar-auth-btn" class="btn-outline btn-sm" type="button">Sign In / Register</button>
+        </div>
+      </header>
+
+      <main class="content-area">
+        <!-- 1. OVERVIEW VIEW -->
+        <section id="view-overview" class="view-section active" aria-labelledby="topbar-title">
+          <div class="hero-card">
+            <div class="hero-content">
+              <span class="eyebrow">AGRI NOVA AI · ACADEMIC PROTOTYPE</span>
+              <h2 data-i18n="hero_title">Precision Agriculture.<br>Smarter Decisions. <span>Sustainable Farming.</span></h2>
+              <p data-i18n="hero_subtitle">
+                Analyze soil nutrients with your Random Forest model, inspect NPK balance &amp; ML feature importances,
+                compare plots over time, monitor weather advisories, and export QR-stamped PDF reports.
+              </p>
+              <div class="hero-actions">
+                <button class="btn-primary" type="button" data-nav-trigger="soil-analysis" data-i18n="cta_soil">Start Soil Analysis →</button>
+                <button class="btn-secondary" type="button" data-nav-trigger="crop-recommendation" data-i18n="cta_crop">Crop Recommendation</button>
+                <button class="btn-ghost-light" type="button" data-nav-trigger="weather" data-i18n="cta_weather">Check Weather</button>
+              </div>
+            </div>
+            <div class="hero-visual">
+              <div class="hero-stat-pill">
+                <small>ML MODEL COVERAGE</small>
+                <strong>6 Crops · 5 Soil Types</strong>
+                <span>Random Forest (99-record educational dataset)</span>
+              </div>
+              <div class="hero-stat-pill">
+                <small>ADVANCED SUITE</small>
+                <strong>Explainability · Batch CSV · Plots · QR PDFs</strong>
+                <span>Real-time What-If simulator &amp; trend analytics</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- KPI STATS -->
+          <div class="kpi-grid">
+            <article class="kpi-card">
+              <div class="kpi-head">
+                <span data-i18n="kpi_total">Total Soil Analyses</span>
+                <span class="kpi-badge">DB</span>
+              </div>
+              <strong id="kpi-total">0</strong>
+              <small>Completed in active workspace</small>
+            </article>
+
+            <article class="kpi-card">
+              <div class="kpi-head">
+                <span data-i18n="kpi_score">Latest Soil Match Index</span>
+                <span class="kpi-badge">PROTO</span>
+              </div>
+              <strong id="kpi-score">—</strong>
+              <small id="kpi-score-sub">Awaiting first analysis</small>
+            </article>
+
+            <article class="kpi-card">
+              <div class="kpi-head">
+                <span data-i18n="kpi_fert">Latest Fertilizer Prediction</span>
+                <span class="kpi-badge">RF ML</span>
+              </div>
+              <strong id="kpi-fert">—</strong>
+              <small id="kpi-fert-sub">Random Forest output</small>
+            </article>
+
+            <article class="kpi-card">
+              <div class="kpi-head">
+                <span data-i18n="kpi_reports">Reports Generated</span>
+                <span class="kpi-badge">QR PDF</span>
+              </div>
+              <strong id="kpi-reports">0</strong>
+              <small id="kpi-plots-sub">0 saved field plots</small>
+            </article>
+          </div>
+
+          <!-- EMPTY STATE WHEN NO REPORTS -->
+          <div id="overview-empty" class="empty-card" hidden>
+            <div class="empty-icon">🌱</div>
+            <h3>No soil analyses recorded yet</h3>
+            <p>
+              Your dashboard metrics, trend charts, and nutrient visualizations automatically populate from real
+              backend records once you complete your first soil analysis.
+            </p>
+            <button class="btn-primary" type="button" data-nav-trigger="soil-analysis">
+              Perform First Soil Analysis →
+            </button>
+          </div>
+
+          <!-- 3-STEP WORKFLOW STRIP -->
+          <div class="step-strip">
+            <div class="step-pill"><span>1</span><div><strong>Input Data</strong><small>Soil readings, CSV, or IoT</small></div></div>
+            <div class="step-pill"><span>2</span><div><strong>Local ML &amp; Vision</strong><small>Random Forest &amp; ONNX AI</small></div></div>
+            <div class="step-pill"><span>3</span><div><strong>Insights &amp; Export</strong><small>NPK, IPM &amp; QR PDFs</small></div></div>
+          </div>
+
+          <!-- DATA GRID WHEN REPORTS EXIST -->
+          <div id="overview-data-grid">
+            <div class="seg-tabs" data-tab-group="overview">
+              <button type="button" class="seg-tab active" data-tab-target="ov-tab-charts">1. Nutrient &amp; Trend Charts</button>
+              <button type="button" class="seg-tab" data-tab-target="ov-tab-model">2. ML Model Card &amp; Health</button>
+              <button type="button" class="seg-tab" data-tab-target="ov-tab-activity">3. Recent Activity &amp; Tips</button>
+            </div>
+
+            <div id="ov-tab-charts" class="tab-pane active" data-pane-group="overview">
+              <div class="dashboard-grid">
+                <div class="card">
+                  <div class="card-header">
+                    <div>
+                      <span class="eyebrow">NUTRIENT OVERVIEW</span>
+                      <h3>Latest NPK Profile</h3>
+                    </div>
+                    <span id="overview-latest-crop" class="pill-soft">No sample</span>
+                  </div>
+                  <div class="chart-box">
+                    <canvas id="overviewNpkChart" aria-label="Latest NPK nutrient chart"></canvas>
+                    <div id="overviewNpkFallback" class="svg-fallback" hidden></div>
+                  </div>
+                  <p class="muted-note">Latest sample NPK vs. illustrative prototype targets.</p>
+                </div>
+
+                <div class="card">
+                  <div class="card-header">
+                    <div>
+                      <span class="eyebrow">HISTORICAL ANALYTICS</span>
+                      <h3>Soil Match Index Trend</h3>
+                    </div>
+                    <span class="pill-soft">RECENT SAMPLES</span>
+                  </div>
+                  <div class="chart-box">
+                    <canvas id="overviewTrendChart" aria-label="Soil match index trend chart"></canvas>
+                    <div id="overviewTrendFallback" class="svg-fallback" hidden></div>
+                  </div>
+                  <p class="muted-note">Match Index progression across your recent analyses.</p>
+                </div>
+              </div>
+            </div>
+
+            <div id="ov-tab-model" class="tab-pane" data-pane-group="overview" hidden>
+              <div class="dashboard-grid">
+                <div class="card">
+                  <div class="card-header">
+                    <div>
+                      <span class="eyebrow">ML TRANSPARENCY · MODEL CARD</span>
+                      <h3>Random Forest Feature Importance</h3>
+                    </div>
+                    <span id="model-trees-badge" class="pill-soft">100 Trees</span>
+                  </div>
+                  <div id="model-importance-bars"></div>
+                  <p id="model-transparency-note" class="muted-note"></p>
+                  <button id="open-dataset-modal-btn" class="btn-outline btn-xs" type="button">Explore Dataset &amp; Validation →</button>
+                </div>
+
+                <div class="card">
+                  <div class="card-header">
+                    <div>
+                      <span class="eyebrow">SOIL HEALTH SUMMARY</span>
+                      <h3>Latest Diagnostic Notes</h3>
+                    </div>
+                    <button class="btn-outline btn-xs" type="button" data-nav-trigger="soil-analysis">New Sample</button>
+                  </div>
+                  <div id="overview-health-summary" class="health-summary-box">
+                    <p class="muted-text">Run a soil analysis to view health observations.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="ov-tab-activity" class="tab-pane" data-pane-group="overview" hidden>
+              <div class="dashboard-grid">
+                <div class="card">
+                  <div class="card-header">
+                    <div>
+                      <span class="eyebrow">RECENT ACTIVITY</span>
+                      <h3>Recent Analysis History</h3>
+                    </div>
+                    <button class="btn-outline btn-xs" type="button" data-nav-trigger="reports-history">View All →</button>
+                  </div>
+                  <div id="overview-recent-list" class="recent-list"></div>
+                </div>
+
+                <div class="card">
+                  <div class="card-header">
+                    <div>
+                      <span class="eyebrow">SUSTAINABLE PRACTICES</span>
+                      <h3>Agricultural Tips</h3>
+                    </div>
+                  </div>
+                  <div id="overview-tips-list" class="tips-list"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2. SOIL ANALYSIS VIEW -->
+        <section id="view-soil-analysis" class="view-section" hidden>
+          <div class="section-intro">
+            <div>
+              <span class="eyebrow">RANDOM FOREST ML MODULE</span>
+              <h2 data-i18n="sa_heading">Soil Nutrient &amp; Fertilizer Analysis</h2>
+              <p>Analyze a single sample, simulate parameter sensitivity in real time, or upload a batch CSV.</p>
+            </div>
+            <div class="intro-actions">
+              <button id="sa-mode-single-btn" class="btn-primary btn-sm" type="button">Single Sample</button>
+              <button id="sa-mode-batch-btn" class="btn-outline btn-sm" type="button">Batch CSV Upload</button>
+              <button id="sa-mode-iot-btn" class="btn-outline btn-sm" type="button">IoT Sensor Stream</button>
+              <button id="open-plots-modal-btn" class="btn-outline btn-sm" type="button">Manage Field Plots</button>
+            </div>
+          </div>
+
+          <!-- SINGLE SAMPLE WORKSPACE -->
+          <div id="sa-single-pane" class="two-col">
+            <form id="soil-form" class="card form-card" novalidate>
+              <div class="card-header">
+                <h3>Soil Profile Inputs</h3>
+                <div class="intro-actions">
+                  <button id="soil-sample-btn" class="btn-outline btn-xs" type="button">Load Demo</button>
+                  <button id="soil-reset-btn" class="btn-ghost btn-xs" type="button">Reset</button>
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="sa-plot-id">
+                  Field / Plot (Optional)
+                  <span class="tooltip-badge" tabindex="0" data-tip="Tag this soil analysis to a saved farm plot and auto-select its soil type.">?</span>
+                </label>
+                <select id="sa-plot-id">
+                  <option value="">No specific plot (General workspace)</option>
+                </select>
+              </div>
+
+              <div class="form-row-2">
+                <div class="field">
+                  <label for="sa-crop">
+                    <span data-i18n="lbl_crop">Crop Type</span>
+                    <span class="tooltip-badge" tabindex="0" data-tip="Crops supported by the trained Random Forest dataset: Rice, Wheat, Maize, Cotton, Sugarcane, Groundnut.">?</span>
+                  </label>
+                  <select id="sa-crop" required>
+                    {% for crop in crops %}
+                    <option value="{{ crop }}">{{ crop }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+
+                <div class="field">
+                  <label for="sa-soil-type">
+                    <span data-i18n="lbl_soil">Soil Type</span>
+                    <span class="tooltip-badge" tabindex="0" data-tip="Texture class from dataset: Sandy, Loamy, Black, Red, or Clayey.">?</span>
+                  </label>
+                  <select id="sa-soil-type" required>
+                    {% for soil in soils %}
+                    <option value="{{ soil }}">{{ soil }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-row-2">
+                <div class="field">
+                  <label for="sa-temperature">
+                    <span data-i18n="lbl_temp">Temperature</span> (<span class="temp-unit-label">°C</span>)
+                    <span class="tooltip-badge" tabindex="0" data-tip="Ambient field temperature. Valid range: 0–60 °C (32–140 °F).">?</span>
+                  </label>
+                  <div class="input-unit">
+                    <input id="sa-temperature" type="number" step="0.1" value="28" required>
+                    <span class="temp-unit-label">°C</span>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label for="sa-humidity">
+                    <span data-i18n="lbl_humidity">Relative Humidity (%)</span>
+                    <span class="tooltip-badge" tabindex="0" data-tip="Relative air humidity from 0% to 100%.">?</span>
+                  </label>
+                  <div class="input-unit">
+                    <input id="sa-humidity" type="number" min="0" max="100" step="0.1" value="60" required>
+                    <span>%</span>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label for="sa-nitrogen">
+                    <span data-i18n="lbl_nitrogen">Nitrogen (N)</span>
+                    <span class="tooltip-badge" tabindex="0" data-tip="Soil nitrogen reading (0–500). Illustrative unit: kg/ha.">?</span>
+                  </label>
+                  <div class="input-unit">
+                    <input id="sa-nitrogen" type="number" min="0" max="500" step="0.1" value="37" required>
+                    <span>kg/ha*</span>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label for="sa-phosphorus">
+                    <span data-i18n="lbl_phosphorus">Phosphorus (P)</span>
+                    <span class="tooltip-badge" tabindex="0" data-tip="Soil phosphorus reading (0–500). Illustrative unit: kg/ha.">?</span>
+                  </label>
+                  <div class="input-unit">
+                    <input id="sa-phosphorus" type="number" min="0" max="500" step="0.1" value="18" required>
+                    <span>kg/ha*</span>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label for="sa-potassium">
+                    <span data-i18n="lbl_potassium">Potassium (K)</span>
+                    <span class="tooltip-badge" tabindex="0" data-tip="Soil potassium reading (0–500). Illustrative unit: kg/ha.">?</span>
+                  </label>
+                  <div class="input-unit">
+                    <input id="sa-potassium" type="number" min="0" max="500" step="0.1" value="25" required>
+                    <span>kg/ha*</span>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label for="sa-ph">
+                    <span data-i18n="lbl_ph">Soil pH</span>
+                    <span class="tooltip-badge" tabindex="0" data-tip="Acidity/alkalinity scale from 0 (acidic) to 14 (alkaline).">?</span>
+                  </label>
+                  <div class="input-unit">
+                    <input id="sa-ph" type="number" min="0" max="14" step="0.1" value="6.5" required>
+                    <span>pH</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="sa-moisture">
+                  <span data-i18n="lbl_moisture">Soil Moisture (%)</span>
+                  <span class="tooltip-badge" tabindex="0" data-tip="Root-zone soil moisture percentage (0–100%).">?</span>
+                </label>
+                <div class="input-unit">
+                  <input id="sa-moisture" type="number" min="0" max="100" step="0.1" value="42" required>
+                  <span>%</span>
+                </div>
+              </div>
+
+              <p class="muted-note">
+                *Nutrient units and threshold percentages are illustrative prototype baselines.
+              </p>
+
+              <div id="soil-form-error" class="alert-error" hidden></div>
+
+              <button id="soil-submit-btn" class="btn-primary btn-full" type="submit" data-i18n="btn_analyze">
+                Analyze Soil &amp; Predict Fertilizer →
+              </button>
+            </form>
+
+            <!-- SOIL ANALYSIS RESULT PANEL -->
+            <div class="card result-card">
+              <div class="card-header">
+                <div>
+                  <span class="eyebrow">ANALYSIS OUTPUT</span>
+                  <h3>Soil Insights &amp; ML Prediction</h3>
+                </div>
+                <span id="sa-status-badge" class="pill-soft">AWAITING INPUT</span>
+              </div>
+
+              <div id="sa-empty" class="empty-inline">
+                <div class="empty-icon">🧪</div>
+                <h4>Ready for soil measurements</h4>
+                <p>Submit soil values on the left to view your ML fertilizer prediction, Random Forest tree-vote split, What-If simulator, and QR-stamped PDF report.</p>
+              </div>
+
+              <div id="sa-result" hidden>
+                <div class="result-hero-row">
+                  <div class="score-box">
+                    <small>STEP 2 · SOIL MATCH INDEX</small>
+                    <div class="score-num"><strong id="sa-score">--</strong><span>/100</span></div>
+                  </div>
+                  <div class="fert-box">
+                    <small>ML PREDICTED FERTILIZER</small>
+                    <strong id="sa-fertilizer">--</strong>
+                    <span>Random Forest Classifier (99-record model)</span>
+                  </div>
+                </div>
+
+                <div class="profile-chips" id="sa-profile-chips"></div>
+
+                <div class="seg-tabs" data-tab-group="soil-result">
+                  <button type="button" class="seg-tab active" data-tab-target="sa-tab-npk">1. NPK &amp; Health</button>
+                  <button type="button" class="seg-tab" data-tab-target="sa-tab-ph">2. pH &amp; Weather</button>
+                  <button type="button" class="seg-tab" data-tab-target="sa-tab-sim">3. Explainability &amp; What-If</button>
+                </div>
+
+                <!-- TAB 1: NPK & HEALTH -->
+                <div id="sa-tab-npk" class="tab-pane active" data-pane-group="soil-result">
+                  <div class="sub-panel">
+                    <div class="sub-panel-head">
+                      <h4>NPK Prototype Status</h4>
+                      <span class="badge-pill">PROTOTYPE THRESHOLDS</span>
+                    </div>
+                    <div id="sa-npk-bars"></div>
+                  </div>
+
+                  <div class="sub-panel">
+                    <div class="sub-panel-head">
+                      <h4>NPK Balance Radar Chart</h4>
+                      <span class="badge-pill">VISUALIZATION</span>
+                    </div>
+                    <div class="radar-wrap">
+                      <canvas id="soilRadarChart" aria-label="NPK balance radar chart"></canvas>
+                      <div id="soilRadarFallback" class="svg-fallback" hidden></div>
+                    </div>
+                  </div>
+
+                  <div class="sub-panel">
+                    <div class="sub-panel-head">
+                      <h4>Crop Health Insights</h4>
+                      <span id="sa-health-overall" class="pill-soft">--</span>
+                    </div>
+                    <p id="sa-health-note" class="muted-text"></p>
+                    <div id="sa-health-observations" class="observations-list"></div>
+                  </div>
+
+                  <div class="sub-panel">
+                    <h4>Recommended Verification Checks</h4>
+                    <ul id="sa-actions" class="check-list"></ul>
+                  </div>
+                </div>
+
+                <!-- TAB 2: PH & WEATHER -->
+                <div id="sa-tab-ph" class="tab-pane" data-pane-group="soil-result" hidden>
+                  <div class="sub-panel">
+                    <div class="sub-panel-head">
+                      <h4>Soil pH &amp; Nutrient Availability Matrix</h4>
+                      <span id="sa-ph-zone-badge" class="badge-pill">pH SPECTRUM</span>
+                    </div>
+                    <div id="sa-ph-matrix"></div>
+                  </div>
+
+                  <div id="sa-weather-advisory-box" class="sub-panel" hidden>
+                    <div class="sub-panel-head">
+                      <h4>Weather-Aware Field Advisory</h4>
+                      <span id="sa-weather-adv-badge" class="badge-pill">WEATHER CHECK</span>
+                    </div>
+                    <p id="sa-weather-adv-text" class="muted-text"></p>
+                  </div>
+                </div>
+
+                <!-- TAB 3: EXPLAINABILITY & WHAT-IF -->
+                <div id="sa-tab-sim" class="tab-pane" data-pane-group="soil-result" hidden>
+                  <div class="sub-panel">
+                    <div class="sub-panel-head">
+                      <h4>Random Forest Tree-Vote Distribution</h4>
+                      <span class="badge-pill">MODEL EXPLAINABILITY</span>
+                    </div>
+                    <div id="sa-tree-votes"></div>
+                    <p class="muted-note">
+                      Decision-tree vote split across classes on the 99-record educational dataset.
+                    </p>
+                  </div>
+
+                  <div class="sub-panel simulator-panel">
+                    <div class="sub-panel-head">
+                      <h4>Interactive "What-If" Sensitivity Simulator</h4>
+                      <span class="badge-pill">LIVE PROTOTYPE DEMO</span>
+                    </div>
+                    <p class="muted-note">Adjust N, P, K, or pH to preview live ML response without saving to history.</p>
+                    <div class="sim-grid">
+                      <label>N: <strong id="sim-n-val">37</strong>
+                        <input id="sim-n" type="range" min="0" max="200" step="1" value="37">
+                      </label>
+                      <label>P: <strong id="sim-p-val">18</strong>
+                        <input id="sim-p" type="range" min="0" max="150" step="1" value="18">
+                      </label>
+                      <label>K: <strong id="sim-k-val">25</strong>
+                        <input id="sim-k" type="range" min="0" max="150" step="1" value="25">
+                      </label>
+                      <label>pH: <strong id="sim-ph-val">6.5</strong>
+                        <input id="sim-ph" type="range" min="3.5" max="9.5" step="0.1" value="6.5">
+                      </label>
+                    </div>
+                    <div class="sim-result-strip">
+                      <span>Simulated Fertilizer: <strong id="sim-fert-out">--</strong></span>
+                      <span>Simulated Match Index: <strong id="sim-score-out">--/100</strong></span>
+                    </div>
+                  </div>
+                </div>
+
+                <div id="sa-disclaimer" class="alert-warning"></div>
+
+                <div class="result-actions">
+                  <button id="sa-pdf-btn" class="btn-primary btn-sm" type="button">↓ QR PDF Report</button>
+                  <button id="sa-tag-btn" class="btn-outline btn-sm" type="button">Sample Bag Tag</button>
+                  <button id="sa-speak-btn" class="btn-outline btn-sm" type="button">🔊 Listen</button>
+                  <button id="sa-csv-btn" class="btn-outline btn-sm" type="button">CSV</button>
+                  <button id="sa-print-btn" class="btn-outline btn-sm" type="button">Print</button>
+                  <button id="sa-ask-ai-btn" class="btn-ghost btn-sm" type="button">Ask AI</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- BATCH CSV WORKSPACE -->
+          <div id="sa-batch-pane" hidden>
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <span class="eyebrow">BULK ML INFERENCE</span>
+                  <h3>Batch CSV Soil Sample Analysis</h3>
+                </div>
+                <a class="btn-outline btn-sm" href="/api/batch/template" download="agri_nova_batch_template.csv">↓ Download CSV Template</a>
+              </div>
+              <p class="muted-text">
+                Upload a UTF-8 `.csv` file (up to 1 MB / 100 rows) with columns: <code>crop, soil_type, temperature, humidity, moisture, nitrogen, phosphorus, potassium, ph</code>.
+              </p>
+              <form id="batch-form" class="batch-upload-row">
+                <input id="batch-file-input" type="file" accept=".csv" required>
+                <select id="batch-plot-id" aria-label="Optional field plot">
+                  <option value="">No specific plot</option>
+                </select>
+                <label class="checkbox-inline">
+                  <input id="batch-save-cb" type="checkbox">
+                  Save valid rows to History
+                </label>
+                <button id="batch-submit-btn" class="btn-primary btn-sm" type="submit">Run Batch Analysis →</button>
+              </form>
+              <div id="batch-error" class="alert-error" hidden></div>
+            </div>
+
+            <div id="batch-results-card" class="card" hidden>
+              <div class="card-header">
+                <div>
+                  <span class="eyebrow">BATCH RESULTS</span>
+                  <h3 id="batch-summary-heading">Processed Samples</h3>
+                </div>
+                <button id="batch-export-btn" class="btn-outline btn-sm" type="button">Export Batch CSV ↓</button>
+              </div>
+              <div id="batch-errors-list" class="alert-warning" hidden></div>
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Row</th>
+                      <th>Crop</th>
+                      <th>Soil</th>
+                      <th>N-P-K</th>
+                      <th>pH</th>
+                      <th>Moisture</th>
+                      <th>ML Fertilizer</th>
+                      <th>Match Index</th>
+                    </tr>
+                  </thead>
+                  <tbody id="batch-tbody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- IOT SENSOR TELEMETRY WORKSPACE -->
+          <div id="sa-iot-pane" hidden>
+            <div class="two-col">
+              <div class="card">
+                <div class="card-header">
+                  <div>
+                    <span class="eyebrow">IOT SENSOR TELEMETRY</span>
+                    <h3>Live / Simulated Soil Sensor Feed</h3>
+                  </div>
+                  <span id="iot-mode-badge" class="badge-pill">IDLE</span>
+                </div>
+                <p class="muted-text">
+                  Receive live JSON readings from an ESP32/Arduino node via <code>POST /api/iot/ingest</code>, or run a clearly labeled simulated sensor stream for demonstrations.
+                </p>
+                <div class="result-actions">
+                  <button id="iot-sim-once-btn" class="btn-primary btn-sm" type="button">Push Simulated Reading</button>
+                  <button id="iot-stream-toggle-btn" class="btn-outline btn-sm" type="button">Start Simulated Stream</button>
+                  <button id="iot-load-into-form-btn" class="btn-outline btn-sm" type="button" disabled>Analyze Latest Reading →</button>
+                </div>
+
+                <div id="iot-latest-grid" class="kpi-grid iot-kpi-grid" style="margin-top:16px;">
+                  <article class="kpi-card"><div class="kpi-head"><span>Device / Soil</span></div><strong id="iot-device">—</strong><small id="iot-time">Awaiting telemetry</small></article>
+                  <article class="kpi-card"><div class="kpi-head"><span>Temp / Hum</span></div><strong id="iot-env">—</strong><small>Ambient reading</small></article>
+                  <article class="kpi-card"><div class="kpi-head"><span>Moisture / pH</span></div><strong id="iot-moist-ph">—</strong><small>Root-zone sensor</small></article>
+                  <article class="kpi-card"><div class="kpi-head"><span>NPK (kg/ha*)</span></div><strong id="iot-npk">—</strong><small>Sensor values</small></article>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-header">
+                  <div>
+                    <span class="eyebrow">HARDWARE WEBHOOK SPEC</span>
+                    <h3>ESP32 / Arduino JSON Endpoint</h3>
+                  </div>
+                </div>
+                <pre class="code-snippet">POST http://127.0.0.1:5000/api/iot/ingest
+Content-Type: application/json
+
+{
+  "device_id": "ESP32-FIELD-01",
+  "soil_type": "Loamy",
+  "temperature": 27.4,
+  "humidity": 62,
+  "moisture": 48,
+  "nitrogen": 34,
+  "phosphorus": 22,
+  "potassium": 29,
+  "ph": 6.6
+}</pre>
+                <h4 style="margin:12px 0 8px;">Recent Telemetry Log</h4>
+                <div id="iot-history-list" class="recent-list"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 3. CROP RECOMMENDATION VIEW -->
+        <section id="view-crop-recommendation" class="view-section" hidden>
+          <div class="section-intro">
+            <div>
+              <span class="eyebrow">EXPERIMENTAL PROTOTYPE · RULE-BASED</span>
+              <h2>Crop Recommendation Module</h2>
+              <p>Transparent rule-based heuristic prototype matching your soil and climate readings against 6 crop profiles.</p>
+            </div>
+            <div class="intro-actions">
+              <button id="cr-copy-soil-btn" class="btn-outline btn-sm" type="button">Copy Soil Analysis Inputs</button>
+              <button id="cr-reset-btn" class="btn-ghost btn-sm" type="button">Reset</button>
+            </div>
+          </div>
+
+          <div class="alert-info">
+            <strong>Experimental Prototype Notice:</strong> Because the underlying academic dataset contains only 99 records, this module uses a transparent rule-based suitability rubric rather than claiming to be a validated ML agricultural prediction model.
+          </div>
+
+          <div class="two-col">
+            <form id="crop-rec-form" class="card form-card" novalidate>
+              <h3>Soil &amp; Climate Conditions</h3>
+
+              <div class="field">
+                <label for="cr-soil-type">Soil Type</label>
+                <select id="cr-soil-type" required>
+                  {% for soil in soils %}
+                  <option value="{{ soil }}">{{ soil }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+
+              <div class="form-row-2">
+                <div class="field">
+                  <label for="cr-temperature">Temperature (<span class="temp-unit-label">°C</span>)</label>
+                  <div class="input-unit">
+                    <input id="cr-temperature" type="number" step="0.1" value="28" required>
+                    <span class="temp-unit-label">°C</span>
+                  </div>
+                </div>
+                <div class="field">
+                  <label for="cr-humidity">Humidity (%)</label>
+                  <div class="input-unit">
+                    <input id="cr-humidity" type="number" min="0" max="100" step="0.1" value="68" required>
+                    <span>%</span>
+                  </div>
+                </div>
+                <div class="field">
+                  <label for="cr-moisture">Soil Moisture (%)</label>
+                  <div class="input-unit">
+                    <input id="cr-moisture" type="number" min="0" max="100" step="0.1" value="55" required>
+                    <span>%</span>
+                  </div>
+                </div>
+                <div class="field">
+                  <label for="cr-ph">Soil pH</label>
+                  <div class="input-unit">
+                    <input id="cr-ph" type="number" min="0" max="14" step="0.1" value="6.4" required>
+                    <span>pH</span>
+                  </div>
+                </div>
+                <div class="field">
+                  <label for="cr-nitrogen">Nitrogen (kg/ha*)</label>
+                  <div class="input-unit">
+                    <input id="cr-nitrogen" type="number" min="0" max="500" step="0.1" value="65" required>
+                    <span>kg/ha</span>
+                  </div>
+                </div>
+                <div class="field">
+                  <label for="cr-phosphorus">Phosphorus (kg/ha*)</label>
+                  <div class="input-unit">
+                    <input id="cr-phosphorus" type="number" min="0" max="500" step="0.1" value="35" required>
+                    <span>kg/ha</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="cr-potassium">Potassium (kg/ha*)</label>
+                <div class="input-unit">
+                  <input id="cr-potassium" type="number" min="0" max="500" step="0.1" value="40" required>
+                  <span>kg/ha</span>
+                </div>
+              </div>
+
+              <div id="cr-error" class="alert-error" hidden></div>
+
+              <button id="cr-submit-btn" class="btn-primary btn-full" type="submit">
+                Evaluate Crop Suitability →
+              </button>
+            </form>
+
+            <div class="card result-card">
+              <div class="card-header">
+                <div>
+                  <span class="eyebrow">PROTOTYPE OUTPUT</span>
+                  <h3>Suggested Crops</h3>
+                </div>
+                <span class="badge-pill">RULE-BASED RUBRIC</span>
+              </div>
+
+              <div id="cr-empty" class="empty-inline">
+                <div class="empty-icon">🌾</div>
+                <h4>Enter field conditions</h4>
+                <p>Submit soil type, weather, pH, moisture, and NPK values to view ranked crop matches and explainable rule scores.</p>
+              </div>
+
+              <div id="cr-result" hidden>
+                <div class="cr-highlight">
+                  <div>
+                    <small>TOP SUGGESTED CROP</small>
+                    <h2 id="cr-top-crop">--</h2>
+                    <p id="cr-top-reason"></p>
+                  </div>
+                  <div class="cr-score-badge">
+                    <strong id="cr-top-score">--</strong>
+                    <span>/100 pts</span>
+                  </div>
+                </div>
+                <p id="cr-score-basis" class="muted-note"></p>
+
+                <div class="sub-panel">
+                  <h4>Soil Condition Summary</h4>
+                  <p id="cr-soil-summary" class="muted-text"></p>
+                </div>
+
+                <div class="sub-panel">
+                  <h4>Top 3 Candidate Breakdown</h4>
+                  <div id="cr-candidates" class="candidates-list"></div>
+                </div>
+
+                <div class="sub-panel">
+                  <h4>Important Considerations</h4>
+                  <ul id="cr-considerations" class="check-list"></ul>
+                </div>
+
+                <div id="cr-disclaimer" class="alert-warning"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- CROP GROWTH-STAGE TIMELINE -->
+          <div id="cr-stages-card" class="card">
+            <div class="card-header">
+              <div>
+                <span class="eyebrow">EDUCATIONAL CROP CALENDAR</span>
+                <h3>Interactive Crop Growth-Stage Timeline</h3>
+              </div>
+              <div id="cr-stage-crop-pills" class="filter-pills">
+                {% for crop in crops %}
+                <button type="button" class="filter-pill stage-crop-pill{% if loop.first %} active{% endif %}" data-stage-crop="{{ crop }}">{{ crop }}</button>
+                {% endfor %}
+              </div>
+            </div>
+            <p id="cr-stage-meta" class="muted-text"></p>
+            <div id="cr-stages-grid" class="stages-grid"></div>
+          </div>
+        </section>
+
+        <!-- 3B. PEST & CAMERA AI VIEW (LOCAL ONNX VISION) -->
+        <section id="view-pest-camera" class="view-section" hidden>
+          <div class="section-intro">
+            <div>
+              <span class="eyebrow">LOCAL ONNX COMPUTER VISION · 3 SPECIALIST MODELS</span>
+              <h2>Plant Pest, Parasite &amp; Animal Camera AI</h2>
+              <p>Capture via live camera or upload a photo to run local ONNX neural networks (PlantDisease 38-class, CerealPestAID 26-class, and Animal/Wildlife ImageNet-1k) with safe IPM guidance.</p>
+            </div>
+          </div>
+
+          <div class="two-col">
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <span class="eyebrow">CAMERA OR PHOTO INPUT</span>
+                  <h3>Capture / Upload Plant, Insect, or Animal</h3>
+                </div>
+                <span id="pest-cam-status" class="pill-soft">CAMERA IDLE</span>
+              </div>
+
+              <div class="camera-stage">
+                <video id="pest-video" autoplay playsinline muted hidden></video>
+                <canvas id="pest-canvas" hidden></canvas>
+                <img id="pest-preview-img" alt="Selected plant or pest preview" hidden>
+                <div id="pest-stage-empty" class="empty-inline">
+                  <div class="empty-icon">📷</div>
+                  <h4>No camera frame or image selected</h4>
+                  <p>Start your webcam/phone camera or upload a clear photo of a plant leaf, insect parasite, or crop animal.</p>
+                </div>
+              </div>
+
+              <div class="result-actions" style="margin-bottom:14px;">
+                <button id="pest-start-cam-btn" class="btn-outline btn-sm" type="button">Start Camera</button>
+                <button id="pest-capture-btn" class="btn-primary btn-sm" type="button" disabled>Capture Snapshot</button>
+                <button id="pest-stop-cam-btn" class="btn-ghost btn-sm" type="button" disabled>Stop Camera</button>
+                <label class="btn-outline btn-sm" for="pest-file-input" style="cursor:pointer;">
+                  Upload Photo
+                  <input id="pest-file-input" type="file" accept="image/*" hidden>
+                </label>
+              </div>
+
+              <div class="form-row-2">
+                <div class="field">
+                  <label for="pest-mode">Local ONNX Vision Model</label>
+                  <select id="pest-mode">
+                    <option value="auto_hybrid">Auto Hybrid (All 3 ONNX Models)</option>
+                    <option value="insect_pest">Insect &amp; Parasite (26-class CerealPestAID)</option>
+                    <option value="leaf_disease">Leaf Disease &amp; Mites (38-class PlantVillage)</option>
+                    <option value="animal_wildlife">Crop Animals &amp; Wildlife (ImageNet-1k)</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="pest-crop">Crop Context (Optional)</label>
+                  <select id="pest-crop">
+                    <option value="Not specified">General / Any Crop</option>
+                    {% for crop in crops %}
+                    <option value="{{ crop }}">{{ crop }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+
+              <div id="pest-error" class="alert-error" hidden></div>
+
+              <button id="pest-analyze-btn" class="btn-primary btn-full" type="button" disabled>
+                Analyze Photo with Local ONNX AI →
+              </button>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <span class="eyebrow">VISION PREDICTION &amp; SAFE IPM</span>
+                  <h3>Detection &amp; Protection Guidance</h3>
+                </div>
+                <span id="pest-severity-badge" class="badge-pill">AWAITING SCAN</span>
+              </div>
+
+              <div id="pest-result-empty" class="empty-inline">
+                <div class="empty-icon">🐞</div>
+                <h4>Ready for visual inspection</h4>
+                <p>Capture or upload an image and click Analyze to run local ONNX inference and view safe Integrated Pest Management (IPM) pesticide-class guidance.</p>
+              </div>
+
+              <div id="pest-result" hidden>
+                <div class="result-hero-row">
+                  <div class="score-box">
+                    <small>ONNX MODEL SOFTMAX</small>
+                    <div class="score-num"><strong id="pest-conf">--</strong><span>%</span></div>
+                    <small id="pest-model-used" style="margin-top:4px;">--</small>
+                  </div>
+                  <div class="fert-box">
+                    <small>DETECTED CLASS</small>
+                    <strong id="pest-label">--</strong>
+                    <span id="pest-category">--</span>
+                  </div>
+                </div>
+
+                <div class="seg-tabs" data-tab-group="pest-result">
+                  <button type="button" class="seg-tab active" data-tab-target="pest-tab-ipm">1. IPM &amp; Pesticide Class</button>
+                  <button type="button" class="seg-tab" data-tab-target="pest-tab-models">2. Models &amp; Canopy</button>
+                </div>
+
+                <div id="pest-tab-ipm" class="tab-pane active" data-pane-group="pest-result">
+                  <div class="sub-panel">
+                    <h4>Integrated Pest Management (IPM) &amp; Pesticide Class</h4>
+                    <p id="pest-ipm-summary" class="muted-text"></p>
+                    <strong style="font-size:12px;">Cultural &amp; Mechanical Controls</strong>
+                    <ul id="pest-cultural-list" class="check-list" style="margin:4px 0 8px;"></ul>
+                    <strong style="font-size:12px;">Biological Controls</strong>
+                    <ul id="pest-bio-list" class="check-list" style="margin:4px 0 8px;"></ul>
+                    <div class="alert-info" style="margin-bottom:8px;">
+                      <strong>Pesticide Class Awareness:</strong> <span id="pest-pesticide-class"></span>
+                    </div>
+                    <p class="muted-note" id="pest-precaution"></p>
+                  </div>
+                </div>
+
+                <div id="pest-tab-models" class="tab-pane" data-pane-group="pest-result" hidden>
+                  <div class="sub-panel">
+                    <h4>Canopy Color Inspection Aid</h4>
+                    <div id="pest-canopy-chips" class="profile-chips" style="margin-bottom:0;"></div>
+                  </div>
+                  <div class="sub-panel">
+                    <h4>Top Predictions Across Local ONNX Models</h4>
+                    <div id="pest-model-breakdown" class="observations-list"></div>
+                  </div>
+                </div>
+
+                <div id="pest-disclaimer" class="alert-warning"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="dashboard-grid">
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <span class="eyebrow">CAMERA SCAN LOG</span>
+                  <h3>Recent Pest &amp; Disease Scans</h3>
+                </div>
+              </div>
+              <div id="pest-scans-list" class="recent-list"></div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <span class="eyebrow">OFFLINE IPM REFERENCE</span>
+                  <h3>Pest, Parasite &amp; Animal Guide</h3>
+                </div>
+                <input id="pest-guide-search" type="search" placeholder="Search aphids, mites, rust, rodents..." style="max-width:220px; height:34px; border:1px solid var(--border); border-radius:8px; padding:0 10px;">
+              </div>
+              <div id="pest-guide-list" class="tips-list" style="max-height:300px; overflow-y:auto;"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 4. FERTILIZER GUIDE VIEW -->
+        <section id="view-fertilizer-guide" class="view-section" hidden>
+          <div class="section-intro">
+            <div>
+              <span class="eyebrow">AGRONOMIC KNOWLEDGE BASE</span>
+              <h2>Fertilizer &amp; Nutrient Guide</h2>
+              <p>Compare primary macronutrients, Urea, DAP, complex NPK grades, and organic soil amendments. Educational reference only — no unverified doses.</p>
+            </div>
+          </div>
+
+          <div class="card toolbar-card">
+            <div class="search-wrap">
+              <input id="fg-search" type="search" placeholder="Search Urea, DAP, NPK, Nitrogen, Organic...">
+            </div>
+            <div id="fg-filters" class="filter-pills">
+              <button class="filter-pill active" type="button" data-nutrient="all">All</button>
+              <button class="filter-pill" type="button" data-nutrient="Nitrogen">Nitrogen</button>
+              <button class="filter-pill" type="button" data-nutrient="Phosphorus">Phosphorus</button>
+              <button class="filter-pill" type="button" data-nutrient="Potassium">Potassium</button>
+              <button class="filter-pill" type="button" data-nutrient="Balanced NPK">Balanced NPK</button>
+              <button class="filter-pill" type="button" data-nutrient="Organic">Organic</button>
+            </div>
+          </div>
+
+          <div id="fg-compare-bar" class="card compare-panel" hidden>
+            <div class="card-header">
+              <div>
+                <span class="eyebrow">SIDE-BY-SIDE COMPARISON</span>
+                <h3>Fertilizer Comparison (<span id="fg-compare-count">0</span>/3 selected)</h3>
+              </div>
+              <button id="fg-clear-compare" class="btn-ghost btn-xs" type="button">Clear Selection</button>
+            </div>
+            <div id="fg-compare-table-wrap" class="table-responsive"></div>
+          </div>
+
+          <div id="fg-grid" class="guide-grid"></div>
+        </section>
+
+        <!-- 5. WEATHER VIEW -->
+        <section id="view-weather" class="view-section" hidden>
+          <div class="section-intro">
+            <div>
+              <span class="eyebrow">FIELD WEATHER MONITOR</span>
+              <h2>Agricultural Weather &amp; Field Advisories</h2>
+              <p>Live weather via backend OpenWeatherMap integration, or clearly labeled Demo Mode when no API key is configured.</p>
+            </div>
+          </div>
+
+          <div class="card toolbar-card">
+            <form id="weather-form" class="weather-search-form">
+              <input id="weather-city-input" type="text" placeholder="Enter city name (e.g., Bengaluru, Ludhiana, Pune)" value="Bengaluru" required>
+              <button id="weather-search-btn" class="btn-primary btn-sm" type="submit">Check Weather</button>
+            </form>
+            <div class="quick-cities">
+              <button class="filter-pill city-chip" type="button" data-city="Bengaluru">Bengaluru</button>
+              <button class="filter-pill city-chip" type="button" data-city="Delhi">Delhi</button>
+              <button class="filter-pill city-chip" type="button" data-city="Mumbai">Mumbai</button>
+              <button class="filter-pill city-chip" type="button" data-city="Ludhiana">Ludhiana</button>
+              <button class="filter-pill city-chip" type="button" data-city="Pune">Pune</button>
+            </div>
+          </div>
+
+          <div id="weather-status-banner" class="alert-info" hidden></div>
+          <div id="weather-error" class="alert-error" hidden></div>
+          <div id="weather-loading" class="card loading-card" hidden>Fetching weather conditions...</div>
+
+          <div id="weather-content" hidden>
+            <div class="weather-hero card">
+              <div>
+                <span id="weather-mode-badge" class="badge-pill">DEMO</span>
+                <h2 id="weather-location">--</h2>
+                <p id="weather-condition">--</p>
+                <small id="weather-updated">Updated: --</small>
+              </div>
+              <div class="weather-temp-big">
+                <strong id="weather-temp">--</strong>
+                <span id="weather-feels">Feels like --</span>
+              </div>
+            </div>
+
+            <div class="kpi-grid">
+              <article class="kpi-card">
+                <div class="kpi-head"><span>Humidity</span></div>
+                <strong id="weather-humidity">--</strong>
+                <small>Relative air humidity</small>
+              </article>
+              <article class="kpi-card">
+                <div class="kpi-head"><span>Wind Speed</span></div>
+                <strong id="weather-wind">--</strong>
+                <small>Surface breeze</small>
+              </article>
+              <article class="kpi-card">
+                <div class="kpi-head"><span>Rain Probability</span></div>
+                <strong id="weather-rain">--</strong>
+                <small>Short-term precipitation risk</small>
+              </article>
+              <article class="kpi-card">
+                <div class="kpi-head"><span>Data Source</span></div>
+                <strong id="weather-source-label">Demo</strong>
+                <small id="weather-source-sub">Backend weather service</small>
+              </article>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <span class="eyebrow">WEATHER-AWARE FIELD ADVISORIES</span>
+                  <h3>Agronomic Risk &amp; Timing Alerts</h3>
+                </div>
+                <span class="badge-pill">RULE-BASED</span>
+              </div>
+              <div id="weather-advisories-list" class="tips-list"></div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <span class="eyebrow">UPCOMING INTERVALS</span>
+                  <h3>Short-Term Forecast</h3>
+                </div>
+              </div>
+              <div id="weather-forecast-grid" class="forecast-grid"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 5B. FARM PLANNER, GPS MAP & PRECISION TOOLS -->
+        <section id="view-farm-planner" class="view-section" hidden>
+          <div class="section-intro">
+            <div>
+              <span class="eyebrow">FIELD OPERATIONS &amp; GEOSPATIAL TOOLS</span>
+              <h2>Farm Planner, GPS Map &amp; Calculators</h2>
+              <p>Pin field plots on the map, track seasonal scouting tasks, and run deterministic agricultural area, spacing, and irrigation volume calculations.</p>
+            </div>
+            <button id="fp-manage-plots-btn" class="btn-outline btn-sm" type="button">+ Add / Manage Plots</button>
+          </div>
+
+          <div class="seg-tabs" data-tab-group="farm-planner">
+            <button type="button" class="seg-tab active" data-tab-target="fp-tab-map">1. Interactive Farm Map</button>
+            <button type="button" class="seg-tab" data-tab-target="fp-tab-tasks">2. Tasks &amp; Scouting</button>
+            <button type="button" class="seg-tab" data-tab-target="fp-tab-calc">3. Precision Calculators</button>
+          </div>
+
+          <!-- TAB 1: FARM MAP -->
+          <div id="fp-tab-map" class="tab-pane active" data-pane-group="farm-planner">
+            <div class="two-col">
+              <div class="card">
+                <div class="card-header">
+                  <div>
+                    <span class="eyebrow">LEAFLET OPENSTREETMAP</span>
+                    <h3>GPS Field Plot Map</h3>
+                  </div>
+                  <span id="map-status-pill" class="pill-soft">CLICK MAP TO PICK COORDS</span>
+                </div>
+                <div id="farm-map" class="farm-map-box"></div>
+                <p class="muted-note">Click anywhere on the map to prefill Latitude &amp; Longitude for a new plot.</p>
+              </div>
+
+              <div class="card">
+                <div class="card-header">
+                  <div>
+                    <span class="eyebrow">PINNED FIELD PLOTS</span>
+                    <h3>Plot Health &amp; Weather Lookup</h3>
+                  </div>
+                </div>
+                <div id="fp-map-plots-list" class="recent-list"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 2: TASKS & SCOUTING -->
+          <div id="fp-tab-tasks" class="tab-pane" data-pane-group="farm-planner" hidden>
+            <div class="two-col">
+              <form id="task-create-form" class="card form-card">
+                <h3>Add Seasonal Field Task</h3>
+                <div class="field">
+                  <label for="task-title">Task Title</label>
+                  <input id="task-title" type="text" placeholder="e.g., Check paddy tillering moisture" required>
+                </div>
+                <div class="form-row-2">
+                  <div class="field">
+                    <label for="task-category">Category</label>
+                    <select id="task-category">
+                      <option value="Scouting">Pest Scouting</option>
+                      <option value="Soil Test">Soil Sampling</option>
+                      <option value="Irrigation">Irrigation Check</option>
+                      <option value="Maintenance">Field Maintenance</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label for="task-plot-id">Field Plot</label>
+                    <select id="task-plot-id">
+                      <option value="">General Workspace</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="field">
+                  <label for="task-due">Target Date</label>
+                  <input id="task-due" type="date">
+                </div>
+                <button class="btn-primary btn-full" type="submit">+ Add Field Task</button>
+              </form>
+
+              <div class="card">
+                <div class="card-header">
+                  <div>
+                    <span class="eyebrow">CHECKLIST</span>
+                    <h3>Field Tasks &amp; Reminders</h3>
+                  </div>
+                  <select id="task-filter-status" aria-label="Filter tasks" style="height:34px; border:1px solid var(--border); border-radius:8px; padding:0 8px;">
+                    <option value="all">All</option>
+                    <option value="pending">Pending</option>
+                    <option value="done">Completed</option>
+                  </select>
+                </div>
+                <div id="tasks-list-wrap" class="recent-list"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 3: PRECISION CALCULATORS -->
+          <div id="fp-tab-calc" class="tab-pane" data-pane-group="farm-planner" hidden>
+            <div class="guide-grid">
+              <div class="card">
+                <span class="eyebrow">GEOMETRY UTILITY</span>
+                <h3>Land Area Converter</h3>
+                <div class="field">
+                  <label for="calc-area-val">Area Value</label>
+                  <input id="calc-area-val" type="number" step="0.01" min="0" value="2.5">
+                </div>
+                <div class="field">
+                  <label for="calc-area-unit">Input Unit</label>
+                  <select id="calc-area-unit">
+                    <option value="acre">Acres</option>
+                    <option value="hectare">Hectares</option>
+                    <option value="sqm">Square Meters</option>
+                    <option value="guntha">Guntha</option>
+                  </select>
+                </div>
+                <div id="calc-area-out" class="alert-info"></div>
+              </div>
+
+              <div class="card">
+                <span class="eyebrow">CROP SPACING MATH</span>
+                <h3>Plant Population Estimator</h3>
+                <div class="form-row-2">
+                  <div class="field">
+                    <label for="calc-pop-acres">Area (Acres)</label>
+                    <input id="calc-pop-acres" type="number" step="0.1" min="0.01" value="1">
+                  </div>
+                  <div class="field">
+                    <label for="calc-row-cm">Row Spacing (cm)</label>
+                    <input id="calc-row-cm" type="number" min="1" value="45">
+                  </div>
+                </div>
+                <div class="field">
+                  <label for="calc-plant-cm">Plant-to-Plant Spacing (cm)</label>
+                  <input id="calc-plant-cm" type="number" min="1" value="15">
+                </div>
+                <div id="calc-pop-out" class="alert-info"></div>
+              </div>
+
+              <div class="card">
+                <span class="eyebrow">HYDROLOGY MATH</span>
+                <h3>Irrigation Water Volume</h3>
+                <div class="form-row-2">
+                  <div class="field">
+                    <label for="calc-irr-acres">Area (Acres)</label>
+                    <input id="calc-irr-acres" type="number" step="0.1" min="0.01" value="1">
+                  </div>
+                  <div class="field">
+                    <label for="calc-irr-mm">Water Depth (mm)</label>
+                    <input id="calc-irr-mm" type="number" min="1" value="25">
+                  </div>
+                </div>
+                <div id="calc-irr-out" class="alert-info"></div>
+                <p class="muted-note">1 mm over 1 hectare = 10,000 liters (10 m³).</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 6. AI ASSISTANT FULL VIEW -->
+        <section id="view-ai-assistant" class="view-section" hidden>
+          <div class="section-intro">
+            <div>
+              <span class="eyebrow">LOCAL RULE-BASED ASSISTANT</span>
+              <h2>Agri Nova AI Assistant</h2>
+              <p>Works offline without an API key and connects directly to your latest completed soil analysis.</p>
+            </div>
+            <button id="page-chat-clear" class="btn-outline btn-sm" type="button">Clear Conversation</button>
+          </div>
+
+          <div class="two-col assistant-layout">
+            <div class="card assistant-main-card">
+              <div id="page-chat-messages" class="chat-stream" aria-live="polite"></div>
+              <div class="quick-question-row">
+                <button type="button" class="quick-q-chip" data-q="What is my soil analysis?">What is my soil analysis?</button>
+                <button type="button" class="quick-q-chip" data-q="What fertilizer did my model predict?">Predicted fertilizer?</button>
+                <button type="button" class="quick-q-chip" data-q="What is my nitrogen status?">My nitrogen status?</button>
+                <button type="button" class="quick-q-chip" data-q="Explain my soil match index">Explain match index</button>
+                <button type="button" class="quick-q-chip" data-q="What is NPK?">What is NPK?</button>
+                <button type="button" class="quick-q-chip" data-q="Explain Urea">Explain Urea</button>
+              </div>
+              <form id="page-chat-form" class="chat-input-row">
+                <button id="page-chat-mic-btn" class="icon-btn mic-btn" type="button" title="Speak question (Web Speech API)" aria-label="Voice input">🎤</button>
+                <input id="page-chat-input" type="text" placeholder="Ask about your latest soil analysis, NPK, pH, soil types, or fertilizers..." autocomplete="off">
+                <button class="btn-primary btn-sm" type="submit">Send</button>
+              </form>
+            </div>
+
+            <div class="card">
+              <h3>What You Can Ask</h3>
+              <ul class="check-list">
+                <li><strong>Latest Analysis Context:</strong> "What is my soil analysis?", "What crop did I select?", "What fertilizer did my model predict?", "What is my nitrogen status?"</li>
+                <li><strong>Score Explanation:</strong> "Explain my soil match index"</li>
+                <li><strong>Agronomy Basics:</strong> "What is NPK?", "Explain Urea", "Explain DAP", "Organic fertilizers", "Soil pH", "Soil moisture", "Soil types"</li>
+              </ul>
+              <div class="alert-info">
+                <strong>Transparency Note:</strong> This assistant uses a deterministic local rule-based agricultural knowledge base combined with your session's latest analysis record. It is not a generative LLM.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 7. REPORTS HISTORY VIEW -->
+        <section id="view-reports-history" class="view-section" hidden>
+          <div class="section-intro">
+            <div>
+              <span class="eyebrow">PERSISTENT SQLITE DATABASE</span>
+              <h2>Reports &amp; Analysis History</h2>
+              <p>Search, filter by crop or plot, compare 2–4 reports side by side, export CSV, or download QR-verified PDF reports.</p>
+            </div>
+            <div class="intro-actions">
+              <button id="rh-compare-btn" class="btn-primary btn-sm" type="button" disabled>Compare Selected (0)</button>
+              <button id="rh-manage-plots-btn" class="btn-outline btn-sm" type="button">Manage Plots</button>
+              <button id="rh-export-csv-btn" class="btn-outline btn-sm" type="button">Export CSV ↓</button>
+              <a class="btn-outline btn-sm" href="/api/export/audit-zip" download="Agri_Nova_AI_Farm_Audit.zip">Audit ZIP ↓</a>
+              <button id="rh-clear-btn" class="btn-danger-outline btn-sm" type="button">Clear History</button>
+            </div>
+          </div>
+
+          <div class="card toolbar-card history-filters-4">
+            <input id="rh-search" type="search" placeholder="Search crop, fertilizer, plot, or report ID...">
+            <select id="rh-crop-filter" aria-label="Filter by crop">
+              <option value="all">All Crops</option>
+              {% for crop in crops %}
+              <option value="{{ crop }}">{{ crop }}</option>
+              {% endfor %}
+            </select>
+            <select id="rh-plot-filter" aria-label="Filter by field plot">
+              <option value="all">All Field Plots</option>
+            </select>
+            <select id="rh-sort" aria-label="Sort reports">
+              <option value="newest">Newest First</option>
+              <option value="oldest">Oldest First</option>
+              <option value="score_desc">Highest Match Index</option>
+              <option value="score_asc">Lowest Match Index</option>
+            </select>
+          </div>
+
+          <div class="card">
+            <div id="rh-empty" class="empty-inline" hidden>
+              <div class="empty-icon">📁</div>
+              <h4>No matching reports found</h4>
+              <p>Run a new soil analysis or adjust your search, crop, and plot filters.</p>
+            </div>
+
+            <div id="rh-table-wrap" class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th style="width:36px;">Cmp</th>
+                    <th>Report ID</th>
+                    <th>Plot</th>
+                    <th>Crop</th>
+                    <th>Soil Type</th>
+                    <th>Predicted Fertilizer</th>
+                    <th>Match Index</th>
+                    <th>Date &amp; Time</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="rh-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- 8. SETTINGS VIEW -->
+        <section id="view-settings" class="view-section" hidden>
+          <div class="section-intro">
+            <div>
+              <span class="eyebrow">PREFERENCES &amp; ACCOUNT</span>
+              <h2>Settings &amp; Profile</h2>
+              <p>Manage user account access, language, visual theme, unit preferences, field plots, and stored report data.</p>
+            </div>
+          </div>
+
+          <div class="two-col">
+            <div class="card">
+              <h3>User Account &amp; Profile</h3>
+              <div id="settings-guest-box">
+                <p class="muted-text">
+                  You are currently using <strong>Guest Workspace Mode</strong>. Sign in or create an account to keep your own private analysis history and field plots.
+                </p>
+                <div class="result-actions">
+                  <button id="settings-open-login" class="btn-primary btn-sm" type="button">Sign In</button>
+                  <button id="settings-open-register" class="btn-outline btn-sm" type="button">Create Account</button>
+                </div>
+              </div>
+
+              <form id="settings-profile-form" hidden>
+                <div class="field">
+                  <label for="prof-username">Username</label>
+                  <input id="prof-username" type="text" disabled>
+                </div>
+                <div class="field">
+                  <label for="prof-email">Email</label>
+                  <input id="prof-email" type="email" disabled>
+                </div>
+                <div class="field">
+                  <label for="prof-fullname">Full Name</label>
+                  <input id="prof-fullname" type="text" placeholder="Your name">
+                </div>
+                <div class="field">
+                  <label for="prof-location">Farm / Region Location</label>
+                  <input id="prof-location" type="text" placeholder="e.g., Karnataka, India">
+                </div>
+                <div class="result-actions">
+                  <button class="btn-primary btn-sm" type="submit">Save Profile</button>
+                  <button id="settings-logout-btn" class="btn-danger-outline btn-sm" type="button">Sign Out</button>
+                </div>
+              </form>
+            </div>
+
+            <div class="card">
+              <h3>Display, Language &amp; Units</h3>
+              <div class="field">
+                <label for="pref-lang">Interface Language</label>
+                <select id="pref-lang">
+                  <option value="en">English (EN)</option>
+                  <option value="hi">हिन्दी (Hindi)</option>
+                  <option value="kn">ಕನ್ನಡ (Kannada)</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="pref-theme">Theme Preference</label>
+                <select id="pref-theme">
+                  <option value="light">Classic Light Green (#F5F8F5)</option>
+                  <option value="forest">Deep Forest Contrast</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="pref-units">Temperature Units</label>
+                <select id="pref-units">
+                  <option value="metric">Metric (°C)</option>
+                  <option value="imperial">Imperial (°F)</option>
+                </select>
+              </div>
+              <p class="muted-note">Temperature inputs are automatically converted to °C before running the Random Forest model.</p>
+
+              <hr class="divider">
+
+              <h3>Data &amp; Plots Management</h3>
+              <div class="result-actions">
+                <button id="settings-manage-plots" class="btn-outline btn-sm" type="button">Manage Field Plots</button>
+                <button id="settings-export-csv" class="btn-outline btn-sm" type="button">Export All CSV</button>
+                <a class="btn-outline btn-sm" href="/api/export/audit-zip" download="Agri_Nova_AI_Farm_Audit.zip">Export Audit ZIP ↓</a>
+                <button id="settings-clear-history" class="btn-danger-outline btn-sm" type="button">Clear Workspace History</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>Application Information &amp; Project Disclaimer</h3>
+            <p class="muted-text">
+              <strong>Agri Nova AI</strong> — Flask + SQLAlchemy + Scikit-learn Random Forest + ReportLab QR PDF Generator.
+              Model trained on a 99-record educational dataset covering 6 crops (Rice, Wheat, Maize, Cotton, Sugarcane, Groundnut),
+              5 soil types (Sandy, Loamy, Black, Red, Clayey), and 7 fertilizer classes (Urea, DAP, 10-26-26, 14-35-14, 17-17-17, 20-20, 28-28).
+            </p>
+            <div class="alert-warning">
+              <strong>Academic Prototype Disclaimer:</strong> This application is intended strictly for academic demonstration,
+              hackathons, and research exploration. Predictions and suitability scores are not validated agricultural advice and
+              must not replace certified soil laboratory testing or consultation with a qualified agronomist.
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- FLOATING CHATBOT WIDGET -->
+  <div id="chatbot-widget">
+    <button id="chatbot-toggle" type="button" aria-label="Open Agri Nova AI Assistant" title="Agri Nova AI Assistant">
+      <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+      </svg>
+    </button>
+
+    <div id="chatbot-window" class="chatbot-hidden" role="dialog" aria-label="Agri Nova AI Assistant">
+      <div class="chatbot-header">
+        <div>
+          <h3>Agri Nova AI Assistant</h3>
+          <small>Rule-Based Support · Soil Context Ready</small>
+        </div>
+        <div class="chatbot-header-actions">
+          <button id="chatbot-clear" type="button" title="Clear chat">Clear</button>
+          <button id="chatbot-close" type="button" aria-label="Close assistant">✕</button>
+        </div>
+      </div>
+
+      <div id="chatbot-messages" aria-live="polite"></div>
+
+      <div class="chatbot-quick-questions">
+        <button type="button" class="quick-question" data-q="What is my soil analysis?">My soil analysis</button>
+        <button type="button" class="quick-question" data-q="What fertilizer did my model predict?">Predicted fertilizer</button>
+        <button type="button" class="quick-question" data-q="What is my nitrogen status?">Nitrogen status</button>
+        <button type="button" class="quick-question" data-q="Explain my soil match index">Match index</button>
+        <button type="button" class="quick-question" data-q="What is NPK?">What is NPK?</button>
+      </div>
+
+      <form id="chatbot-form">
+        <button id="chatbot-mic-btn" class="mic-btn-round" type="button" title="Speak question (Web Speech API)" aria-label="Voice input">🎤</button>
+        <input id="chatbot-input" type="text" placeholder="Ask about soil, NPK, or your analysis..." autocomplete="off">
+        <button type="submit" aria-label="Send message">➤</button>
+      </form>
+
+      <div class="chatbot-footer">
+        Local Rule-Based Assistant · Verify advice with an agronomist
+      </div>
+    </div>
+  </div>
+
+  <!-- REPORT DETAIL MODAL -->
+  <div id="report-modal" class="modal-overlay" hidden>
+    <div class="modal-card modal-lg" role="dialog" aria-modal="true" aria-labelledby="rm-title">
+      <div class="modal-header">
+        <div>
+          <span class="eyebrow" id="rm-uid">REPORT</span>
+          <h3 id="rm-title">Soil Analysis Details</h3>
+        </div>
+        <button id="rm-close" class="icon-btn" type="button" aria-label="Close modal">✕</button>
+      </div>
+      <div id="rm-body" class="modal-body"></div>
+      <div class="modal-footer">
+        <button id="rm-tag-btn" class="btn-outline btn-sm" type="button">Sample Bag Tag (PDF)</button>
+        <button id="rm-pdf-btn" class="btn-primary btn-sm" type="button">↓ Download QR PDF</button>
+        <button id="rm-close-btn" class="btn-outline btn-sm" type="button">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- DATASET EXPLORER & MODEL VALIDATION MODAL -->
+  <div id="dataset-modal" class="modal-overlay" hidden>
+    <div class="modal-card modal-xl" role="dialog" aria-modal="true" aria-labelledby="ds-title">
+      <div class="modal-header">
+        <div>
+          <span class="eyebrow">MODEL TRANSPARENCY · 99-RECORD DATASET</span>
+          <h3 id="ds-title">Dataset Explorer &amp; Validation Metrics</h3>
+        </div>
+        <button id="ds-close" class="icon-btn" type="button" aria-label="Close modal">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="kpi-grid">
+          <article class="kpi-card"><div class="kpi-head"><span>Dataset Rows</span></div><strong id="ds-total-rows">—</strong><small>cleaned_fertilizer_dataset.csv</small></article>
+          <article class="kpi-card"><div class="kpi-head"><span>80/20 Test Split</span></div><strong id="ds-test-rows">—</strong><small>Stratified holdout subset</small></article>
+          <article class="kpi-card"><div class="kpi-head"><span>Holdout Accuracy</span></div><strong id="ds-acc">—</strong><small>On 20 educational rows</small></article>
+          <article class="kpi-card"><div class="kpi-head"><span>Fertilizer Classes</span></div><strong id="ds-classes">7</strong><small>Urea, DAP &amp; NPK grades</small></article>
+        </div>
+        <div id="ds-caveat" class="alert-warning" style="margin-bottom:14px;"></div>
+        <div class="toolbar-card" style="margin-bottom:12px;">
+          <select id="ds-crop-filter" aria-label="Filter dataset by crop">
+            <option value="all">All Crops</option>
+            {% for crop in crops %}
+            <option value="{{ crop }}">{{ crop }}</option>
+            {% endfor %}
+          </select>
+          <select id="ds-fert-filter" aria-label="Filter dataset by fertilizer">
+            <option value="all">All Fertilizer Classes</option>
+            <option value="Urea">Urea</option>
+            <option value="DAP">DAP</option>
+            <option value="10-26-26">10-26-26</option>
+            <option value="14-35-14">14-35-14</option>
+            <option value="17-17-17">17-17-17</option>
+            <option value="20-20">20-20</option>
+            <option value="28-28">28-28</option>
+          </select>
+        </div>
+        <div class="table-responsive" style="max-height:320px; overflow-y:auto;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>#</th><th>Crop</th><th>Soil</th><th>Temp</th><th>Hum</th><th>Moist</th><th>N</th><th>P</th><th>K</th><th>Fertilizer</th>
+              </tr>
+            </thead>
+            <tbody id="ds-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="ds-close-btn" class="btn-outline btn-sm" type="button">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MULTI-REPORT COMPARISON MODAL -->
+  <div id="compare-modal" class="modal-overlay" hidden>
+    <div class="modal-card modal-xl" role="dialog" aria-modal="true" aria-labelledby="cmp-title">
+      <div class="modal-header">
+        <div>
+          <span class="eyebrow">MULTI-REPORT ANALYTICS</span>
+          <h3 id="cmp-title">Side-by-Side Soil Report Comparison</h3>
+        </div>
+        <button id="cmp-close" class="icon-btn" type="button" aria-label="Close modal">✕</button>
+      </div>
+      <div id="cmp-body" class="modal-body table-responsive"></div>
+      <div class="modal-footer">
+        <button id="cmp-pdf-btn" class="btn-primary btn-sm" type="button">↓ Download Comparison PDF</button>
+        <button id="cmp-close-btn" class="btn-outline btn-sm" type="button">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FIELD PLOTS MODAL -->
+  <div id="plots-modal" class="modal-overlay" hidden>
+    <div class="modal-card modal-lg" role="dialog" aria-modal="true" aria-labelledby="plots-modal-title">
+      <div class="modal-header">
+        <div>
+          <span class="eyebrow">MULTI-PLOT TRACKING</span>
+          <h3 id="plots-modal-title">Field / Plot Management</h3>
+        </div>
+        <button id="plots-close" class="icon-btn" type="button" aria-label="Close modal">✕</button>
+      </div>
+      <div class="modal-body">
+        <form id="plot-create-form" class="plot-create-grid">
+          <div class="field">
+            <label for="plot-name-input">Plot Name</label>
+            <input id="plot-name-input" type="text" placeholder="e.g., North Paddy Block" required>
+          </div>
+          <div class="field">
+            <label for="plot-soil-input">Default Soil Type</label>
+            <select id="plot-soil-input">
+              {% for soil in soils %}
+              <option value="{{ soil }}">{{ soil }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="field">
+            <label for="plot-location-input">Location</label>
+            <input id="plot-location-input" type="text" placeholder="Village / District">
+          </div>
+          <div class="field">
+            <label for="plot-area-input">Area (Acres)</label>
+            <input id="plot-area-input" type="number" step="0.1" min="0" placeholder="2.5">
+          </div>
+          <div class="field">
+            <label for="plot-lat-input">Latitude (Optional)</label>
+            <input id="plot-lat-input" type="number" step="0.000001" min="-90" max="90" placeholder="12.9716">
+          </div>
+          <div class="field">
+            <label for="plot-lon-input">Longitude (Optional)</label>
+            <input id="plot-lon-input" type="number" step="0.000001" min="-180" max="180" placeholder="77.5946">
+          </div>
+          <button class="btn-primary btn-sm" type="submit">+ Add Field Plot</button>
+        </form>
+        <hr class="divider">
+        <div id="plots-list-wrap" class="recent-list"></div>
+      </div>
+      <div class="modal-footer">
+        <button id="plots-close-btn" class="btn-outline btn-sm" type="button">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- AUTH MODAL -->
+  <div id="auth-modal" class="modal-overlay" hidden>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="auth-modal-title">
+      <div class="modal-header">
+        <div>
+          <span class="eyebrow">AGRI NOVA ACCOUNT</span>
+          <h3 id="auth-modal-title">Sign In</h3>
+        </div>
+        <button id="auth-close" class="icon-btn" type="button" aria-label="Close modal">✕</button>
+      </div>
+      <div class="auth-tabs">
+        <button id="tab-login" class="auth-tab active" type="button">Sign In</button>
+        <button id="tab-register" class="auth-tab" type="button">Register</button>
+      </div>
+
+      <form id="login-form" class="modal-body">
+        <div class="field">
+          <label for="login-identifier">Username or Email</label>
+          <input id="login-identifier" type="text" required autocomplete="username">
+        </div>
+        <div class="field">
+          <label for="login-password">Password</label>
+          <input id="login-password" type="password" required autocomplete="current-password">
+        </div>
+        <div id="login-error" class="alert-error" hidden></div>
+        <button class="btn-primary btn-full" type="submit">Sign In</button>
+      </form>
+
+      <form id="register-form" class="modal-body" hidden>
+        <div class="field">
+          <label for="reg-username">Username</label>
+          <input id="reg-username" type="text" required autocomplete="username" placeholder="letters, numbers, _ . -">
+        </div>
+        <div class="field">
+          <label for="reg-email">Email</label>
+          <input id="reg-email" type="email" required autocomplete="email">
+        </div>
+        <div class="field">
+          <label for="reg-fullname">Full Name</label>
+          <input id="reg-fullname" type="text" placeholder="Optional">
+        </div>
+        <div class="field">
+          <label for="reg-password">Password (min 6 chars)</label>
+          <input id="reg-password" type="password" minlength="6" required autocomplete="new-password">
+        </div>
+        <div id="register-error" class="alert-error" hidden></div>
+        <button class="btn-primary btn-full" type="submit">Create Account</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- CONFIRM MODAL -->
+  <div id="confirm-modal" class="modal-overlay" hidden>
+    <div class="modal-card modal-sm" role="dialog" aria-modal="true" aria-labelledby="confirm-title">
+      <div class="modal-header">
+        <h3 id="confirm-title">Confirm Action</h3>
+        <button id="confirm-close" class="icon-btn" type="button" aria-label="Close">✕</button>
+      </div>
+      <p id="confirm-message" class="modal-body muted-text"></p>
+      <div class="modal-footer">
+        <button id="confirm-cancel" class="btn-outline btn-sm" type="button">Cancel</button>
+        <button id="confirm-ok" class="btn-danger btn-sm" type="button">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST CONTAINER -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+</body>
+</html>
