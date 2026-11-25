@@ -34,5 +34,11 @@ python app.py
 ```
 Then open **http://127.0.0.1:5000** in your browser.
 
+## Deploy Public Live URL (Render Free Tier)
+This repository includes `Procfile`, `render.yaml`, `.python-version`, and `gunicorn` in `requirements.txt`.
+1. Sign in at **https://dashboard.render.com** with GitHub (`prerana2713`).
+2. Click **New + → Blueprint** (or **Web Service**) and select `prerana2713/agri-nova-ai`.
+3. Render automatically reads `render.yaml` (`pip install -r requirements.txt` and `gunicorn app:app --bind 0.0.0.0:$PORT --workers 1 --threads 4 --timeout 120`) and publishes a live `https://<your-app>.onrender.com` URL.
+
 ## Academic Prototype Disclaimer
 The fertilizer classifier was trained on a small 99-record educational dataset (`ml_model/cleaned_fertilizer_dataset.csv`). Predictions, tree-vote distributions, illustrative nutrient targets, Soil Match Index scores, and rule-based crop/weather advisories are for academic demonstration only and are **not** validated agricultural prescriptions. Always consult a certified soil testing laboratory or qualified agronomist before making farm fertilizer decisions.
