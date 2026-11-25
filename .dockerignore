@@ -1,0 +1,9 @@
+.git/
+__pycache__/
+*.py[cod]
+.env
+instance/
+venv/
+.venv/
+*.db
+*.sqlite*

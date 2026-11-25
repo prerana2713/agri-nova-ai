@@ -1,3 +1,13 @@
+---
+title: Agri Nova AI
+emoji: 🌱
+colorFrom: green
+colorTo: emerald
+sdk: docker
+app_port: 7860
+pinned: false
+---
+
 # Agri Nova AI
 
 **Precision Agriculture. Smarter Decisions. Sustainable Farming.**
@@ -33,6 +43,17 @@ copy .env.example .env
 python app.py
 ```
 Then open **http://127.0.0.1:5000** in your browser.
+
+## Deploy Public Live URL (Hugging Face Spaces — No Card Required)
+This repository includes a `Dockerfile` (`port 7860`) and Hugging Face Space metadata header.
+1. Create a free account at **https://huggingface.co** (no credit card required).
+2. Create a new Space at **https://huggingface.co/new-space** (Name: `agri-nova-ai`, SDK: **Docker → Blank**, Visibility: **Public**).
+3. Push this repository to the Space:
+   ```powershell
+   git remote add space https://huggingface.co/spaces/<your-hf-username>/agri-nova-ai
+   git push space main
+   ```
+4. Once built, your public live URL is `https://<your-hf-username>-agri-nova-ai.hf.space`.
 
 ## Deploy Public Live URL (Render Free Tier)
 This repository includes `Procfile`, `render.yaml`, `.python-version`, and `gunicorn` in `requirements.txt`.
